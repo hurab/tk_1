@@ -11,4 +11,5 @@ class Strings {
    String changeLanguage = 'changeLanguage'.tr();
    String cancel = 'cancel'.tr();
    String ok = 'ok'.tr();
+   String checkoutThisProduct = 'checkoutThisProduct'.tr();
 }

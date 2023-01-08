@@ -8,8 +8,8 @@ class BottomCartWidget extends ConsumerWidget {
   const BottomCartWidget({super.key});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-   final counterCount =  ref.watch(counterCart);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final counterCount = ref.watch(counterCart);
     double width = MediaQuery.of(context).size.width;
     double paddingCard = 3;
     double height = 50;
@@ -55,8 +55,8 @@ class BottomCartWidget extends ConsumerWidget {
                   Spacer(),
                   IconButton(
                     onPressed: () {
-                      if(ref.read(counterCart.notifier).state > 1)
-                      ref.read(counterCart.notifier).state--;
+                      if (ref.read(counterCart.notifier).state > 1)
+                       ref.read(counterCart.notifier).state--;
                     },
                     icon: Icon(
                       Icons.remove_circle,
@@ -75,35 +75,39 @@ class BottomCartWidget extends ConsumerWidget {
             right: 0,
             top: 0,
             bottom: 0,
-            child: Stack(
-              children: [
-                Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    margin: EdgeInsets.only(left: 40),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(64),
-                        bottomRight: Radius.circular(64),
+            child: GestureDetector(
+              onTap: () {
+              },
+              child: Stack(
+                children: [
+                  Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      margin: EdgeInsets.only(left: 40),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(64),
+                          bottomRight: Radius.circular(64),
+                        ),
                       ),
+                      child: Center(
+                        child: Text(
+                          Strings().addToCart,
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                      )),
+                  ClipPath(
+                    clipper: BottomCartClipper(
+                      width: height,
+                      height: height + paddingCard * 2,
                     ),
-                    child: Center(
-                      child: Text(
-                        Strings().addToCart,
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                    )),
-                ClipPath(
-                  clipper: BottomCartClipper(
-                    width: height,
-                    height: height + paddingCard * 2,
+                    child: Container(
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                  child: Container(
-                    color: AppColors.primaryColor,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

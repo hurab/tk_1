@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:wothoq/core/utils/helper.dart';
+import 'package:wothoq/data/product_provider.dart';
+import 'package:wothoq/domain/model/product_response.dart';
 import 'package:wothoq/translations/Strings.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class ProductAppBar extends StatelessWidget {
+class ProductAppBar extends ConsumerWidget {
   const ProductAppBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    EdgeInsetsGeometry _padding =  EdgeInsets.only(left: 20, right: 6, top: 6, bottom: 6);
+  Widget build(BuildContext context,WidgetRef ref) {
+    EdgeInsetsGeometry _padding = EdgeInsets.only(left: 20, right: 6, top: 6, bottom: 6);
     BorderRadius _borderRadius = BorderRadius.only(
       topRight: Radius.circular(64),
       bottomRight: Radius.circular(64),
@@ -17,7 +22,7 @@ class ProductAppBar extends StatelessWidget {
         topLeft: Radius.circular(64),
         bottomLeft: Radius.circular(64),
       );
-     _padding =  EdgeInsets.only(left: 6, right: 20, top: 6, bottom: 6);
+      _padding = EdgeInsets.only(left: 6, right: 20, top: 6, bottom: 6);
     }
     return Container(
       margin: EdgeInsets.only(top: 8),
@@ -29,7 +34,11 @@ class ProductAppBar extends StatelessWidget {
             child: Icon(Icons.arrow_back, color: Colors.black, size: 20),
           ),
           Spacer(),
-          singleAppBarButton(Icons.share_outlined, press: () {}),
+          singleAppBarButton(Icons.share_outlined, press: () {
+            ProductResponse? product = ref.read(productsResponse);
+            if(product != null)
+            Share.share(Strings().checkoutThisProduct + " ${product.name??""}",subject: product.name??"");
+          }),
           singleAppBarButton(Icons.favorite_border, press: () {
             //Show dialog change language
             showDialog(
